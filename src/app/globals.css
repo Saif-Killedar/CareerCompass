@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Government of J&K Professional Styling */
+@layer base {
+  :root {
+    /* Government Gold - Chinar Leaf Colors */
+    --government-50: #fffbeb;
+    --government-100: #fef3c7;
+    --government-200: #fde68a;
+    --government-300: #fcd34d;
+    --government-400: #fbbf24;
+    --government-500: #d4af37;
+    --government-600: #b8860b;
+    --government-700: #92400e;
+    --government-800: #78350f;
+    --government-900: #451a03;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+  
+  /* Mobile-First Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+  
+  h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+  
+  h3 {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+  
+  h4 {
+    @apply text-base sm:text-lg lg:text-xl;
+  }
+  
+  p {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+  
+  /* Focus States for Accessibility */
+  *:focus {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-100;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-300 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-400;
+  }
+
+  /* Hide any browser overlays or cursors */
+  *::before,
+  *::after {
+    pointer-events: none !important;
+  }
+  
+  /* Prevent text cursor artifacts */
+  * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Mobile-specific cursor and touch fixes */
+  @media (max-width: 768px) {
+    * {
+      -webkit-touch-callout: none !important;
+      -webkit-user-select: none !important;
+      -khtml-user-select: none !important;
+      -moz-user-select: none !important;
+      -ms-user-select: none !important;
+      user-select: none !important;
+      cursor: default !important;
+      -webkit-tap-highlight-color: transparent !important;
+      -webkit-appearance: none !important;
+    }
+    
+    /* Hide mobile text selection handles and cursors */
+    *::-webkit-selection {
+      background: transparent !important;
+      color: inherit !important;
+    }
+    
+    *::-moz-selection {
+      background: transparent !important;
+      color: inherit !important;
+    }
+    
+    /* Prevent mobile text cursor */
+    body, html {
+      cursor: default !important;
+      -webkit-user-select: none !important;
+      -webkit-touch-callout: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    
+    /* Specifically target text elements that might show cursors */
+    span, p, div, h1, h2, h3, h4, h5, h6 {
+      cursor: default !important;
+      -webkit-user-select: none !important;
+      -webkit-touch-callout: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    
+    /* Hide any mobile browser UI elements */
+    *::before, *::after {
+      display: none !important;
+      content: none !important;
+      background: none !important;
+      border: none !important;
+    }
+    
+    /* Aggressive mobile cursor hiding */
+    * {
+      caret-color: transparent !important;
+      outline: none !important;
+      -webkit-text-size-adjust: 100% !important;
+      -ms-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+    }
+    
+    /* Hide mobile selection indicators */
+    input[type="text"]::-webkit-input-placeholder { color: transparent !important; }
+    input[type="text"]::-moz-placeholder { color: transparent !important; }
+    input[type="text"]:-ms-input-placeholder { color: transparent !important; }
+    input[type="text"]:-moz-placeholder { color: transparent !important; }
+  }
+  
+  /* Allow selection only for input elements */
+  input, textarea, [contenteditable] {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+  }
+}
+
+@layer components {
+  /* Mobile Navigation Safe Area */
+  .mobile-safe-bottom {
+    @apply pb-20 lg:pb-8;
+  }
+  
+  .mobile-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Jammu & Kashmir Professional Branding Components */
+  .gov-header {
+    @apply bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 text-white shadow-xl border-b-4 border-government-500;
+  }
+  
+  .gov-card {
+    @apply bg-white rounded-2xl shadow-soft border border-government-200 p-4 sm:p-6 
+           hover:shadow-medium transition-shadow duration-200;
+  }
+  
+  .gov-button {
+    @apply inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 
+           bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 
+           text-white font-semibold rounded-xl transition-all duration-200 shadow-medium
+           focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 border border-primary-500
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .gov-button-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 
+           bg-white hover:bg-government-50 text-primary-700 font-semibold 
+           rounded-xl transition-all duration-200 shadow-soft border-2 border-primary-300
+           hover:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+  
+  .gov-badge {
+    @apply inline-flex items-center px-3 py-1 bg-gradient-to-r from-secondary-100 to-official-100 
+           text-primary-800 rounded-full text-sm font-semibold border border-secondary-300;
+  }
+  
+  .gov-input {
+    @apply w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-neutral-300 
+           rounded-xl text-neutral-900 placeholder-neutral-500
+           focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-0
+           transition-all duration-200;
+  }
+  
+  /* Mobile-First Layout Components */
+  .mobile-container {
+    @apply max-w-sm mx-auto px-4 sm:max-w-md md:max-w-lg lg:max-w-7xl lg:px-8;
+  }
+  
+  .mobile-grid {
+    @apply grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+  
+  .mobile-section {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+  
+  /* Status Indicators */
+  .status-success {
+    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+           bg-success-100 text-success-800;
+  }
+  
+  .status-warning {
+    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+           bg-secondary-100 text-secondary-800;
+  }
+  
+  .status-error {
+    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium 
+           bg-danger-100 text-danger-800;
+  }
+  
+  /* Loading States */
+  .loading-skeleton {
+    @apply animate-pulse bg-neutral-200 rounded;
+  }
+  
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2 border-neutral-200 border-t-primary-600;
+  }
+}
+
+@layer utilities {
+  /* Mobile-First Utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Mobile bottom navigation spacing */
+  @media (max-width: 768px) {
+    body {
+      padding-bottom: 80px; /* Space for bottom navigation */
+    }
+  }
+  
+  /* Government Brand Gradients */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-700;
+  }
+  
+  .gradient-secondary {
+    @apply bg-gradient-to-r from-secondary-400 to-secondary-500;
+  }
+  
+  .gradient-success {
+    @apply bg-gradient-to-r from-success-500 to-success-600;
+  }
+  
+  /* Touch-Friendly Sizing */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Responsive Text */
+  .text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+  
+  .text-responsive-lg {
+    @apply text-base sm:text-lg lg:text-xl;
+  }
+}
