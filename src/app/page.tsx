@@ -720,13 +720,17 @@ export default function HomePage() {
                             className="w-full h-full object-cover"
                             onError={(e) => {
                               // Fallback to avatar if image not found
-                              e.target.style.display = 'none';
-                              e.target.nextElementSibling.style.display = 'flex';
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                              const sibling = target.nextElementSibling as HTMLElement;
+                              if (sibling) {
+                                sibling.style.display = 'flex';
+                              }
                             }}
                           />
                           {/* Fallback Avatar */}
                           <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500 items-center justify-center text-white font-bold text-4xl sm:text-6xl hidden">
-                            {story.name.charAt(0)}
+                            {story.name.charAt(0).toUpperCase()}
                           </div>
                         </div>
                       </div>
