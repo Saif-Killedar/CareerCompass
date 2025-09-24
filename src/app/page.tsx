@@ -1,26 +1,32 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { 
-  Target, 
-  BookOpen, 
+  ArrowRight, 
   Users, 
-  Clock, 
+  BookOpen, 
+  Calendar, 
+  Award, 
+  TrendingUp, 
   MapPin, 
-  Star,
+  Phone, 
+  Mail,
+  ChevronLeft,
   ChevronRight,
-  GraduationCap,
-  TrendingUp,
-  Award,
+  Play,
+  Star,
+  CheckCircle,
+  Clock,
+  Target,
+  Zap,
+  Heart,
   Shield,
   Lightbulb,
+  Globe,
   Brain,
-  Zap,
-  ArrowRight,
-  CheckCircle,
-  BarChart3
-} from 'lucide-react'
-import Link from 'next/link'
+  GraduationCap
+} from 'lucide-react';
 
 export default function HomePage() {
   const [isScrolled, setIsScrolled] = useState(false)

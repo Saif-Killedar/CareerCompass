@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, User, Edit, BookOpen, Target, Calendar, Award, Settings, Bell, HelpCircle, LogOut, MapPin, Phone, Mail, GraduationCap, TrendingUp } from 'lucide-react';
+import { ArrowLeft, User, Edit, BookOpen, Target, Calendar, Award, Settings, Bell, HelpCircle, LogOut, MapPin, Phone, Mail, GraduationCap, TrendingUp, Save, X } from 'lucide-react';
 
 interface UserProfile {
   name: string;
@@ -88,24 +88,61 @@ const quickActions = [
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState(mockUser);
+  const [editForm, setEditForm] = useState(mockUser);
+
+  const handleSave = () => {
+    setUser(editForm);
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditForm(user);
+    setIsEditing(false);
+  };
+
+  const handleInputChange = (field: keyof UserProfile, value: string) => {
+    setEditForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 pb-20 md:pb-8">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-2 border-primary-200">
+      <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-primary-700 hover:text-primary-800">
+            <Link href="/" className="flex items-center text-white hover:text-primary-200">
               <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-semibold">Back</span>
+              <span className="font-medium">Home</span>
             </Link>
-            <h1 className="text-lg font-bold text-neutral-800">Profile</h1>
-            <button
-              onClick={() => setIsEditing(!isEditing)}
-              className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg"
-            >
-              <Edit className="w-5 h-5" />
-            </button>
+            <h1 className="text-lg font-bold text-white">Profile</h1>
+            <div className="flex items-center space-x-2">
+              {isEditing ? (
+                <>
+                  <button
+                    onClick={handleCancel}
+                    className="p-2 text-white hover:bg-red-500 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    className="p-2 text-white hover:bg-green-500 rounded-lg transition-colors"
+                  >
+                    <Save className="w-5 h-5" />
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="p-2 text-white hover:bg-primary-500 rounded-lg transition-colors"
+                >
+                  <Edit className="w-5 h-5" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -119,12 +156,54 @@ export default function ProfilePage() {
               <User className="w-10 h-10 text-white" />
             </div>
             <div className="flex-1">
-              <h2 className="text-xl font-bold text-neutral-800 mb-1">{user.name}</h2>
-              <p className="text-neutral-600 mb-1">{user.class} Student • {user.stream} Stream</p>
-              <div className="flex items-center text-neutral-500">
-                <MapPin className="w-4 h-4 mr-1" />
-                <span className="text-sm">{user.location}</span>
-              </div>
+              {isEditing ? (
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    value={editForm.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="w-full text-xl font-bold text-neutral-800 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2"
+                    placeholder="Full Name"
+                  />
+                  <div className="flex space-x-2">
+                    <select
+                      value={editForm.class}
+                      onChange={(e) => handleInputChange('class', e.target.value)}
+                      className="flex-1 text-neutral-600 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2"
+                    >
+                      <option value="10th">10th</option>
+                      <option value="11th">11th</option>
+                      <option value="12th">12th</option>
+                      <option value="Graduate">Graduate</option>
+                    </select>
+                    <select
+                      value={editForm.stream}
+                      onChange={(e) => handleInputChange('stream', e.target.value)}
+                      className="flex-1 text-neutral-600 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2"
+                    >
+                      <option value="Science">Science</option>
+                      <option value="Commerce">Commerce</option>
+                      <option value="Arts">Arts</option>
+                    </select>
+                  </div>
+                  <input
+                    type="text"
+                    value={editForm.location}
+                    onChange={(e) => handleInputChange('location', e.target.value)}
+                    className="w-full text-sm text-neutral-500 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2"
+                    placeholder="Location"
+                  />
+                </div>
+              ) : (
+                <>
+                  <h2 className="text-xl font-bold text-neutral-800 mb-1">{user.name}</h2>
+                  <p className="text-neutral-600 mb-1">{user.class} Student • {user.stream} Stream</p>
+                  <div className="flex items-center text-neutral-500">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    <span className="text-sm">{user.location}</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -132,11 +211,31 @@ export default function ProfilePage() {
           <div className="space-y-3 mb-6">
             <div className="flex items-center">
               <Mail className="w-5 h-5 text-neutral-400 mr-3" />
-              <span className="text-neutral-700">{user.email}</span>
+              {isEditing ? (
+                <input
+                  type="email"
+                  value={editForm.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  className="flex-1 text-neutral-700 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Email Address"
+                />
+              ) : (
+                <span className="text-neutral-700">{user.email}</span>
+              )}
             </div>
             <div className="flex items-center">
               <Phone className="w-5 h-5 text-neutral-400 mr-3" />
-              <span className="text-neutral-700">{user.phone}</span>
+              {isEditing ? (
+                <input
+                  type="tel"
+                  value={editForm.phone}
+                  onChange={(e) => handleInputChange('phone', e.target.value)}
+                  className="flex-1 text-neutral-700 bg-gray-50 border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Phone Number"
+                />
+              ) : (
+                <span className="text-neutral-700">{user.phone}</span>
+              )}
             </div>
           </div>
 

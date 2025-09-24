@@ -32,17 +32,17 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 mobile-safe-bottom">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-2 border-primary-200">
+      <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-primary-700 hover:text-primary-800">
+            <Link href="/" className="flex items-center text-white hover:text-primary-200 transition-colors">
               <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-semibold">Back to Home</span>
+              <span className="font-medium">Home</span>
             </Link>
-            <h1 className="text-lg font-bold text-neutral-800">
+            <h1 className="text-lg font-bold text-white">
               {isLogin ? 'Sign In' : 'Create Account'}
             </h1>
-            <div className="w-24"></div>
+            <div className="w-16"></div>
           </div>
         </div>
       </header>
@@ -211,11 +211,16 @@ export default function LoginPage() {
             {/* Forgot Password (Login only) */}
             {isLogin && (
               <div className="text-right">
-                <Link href="/forgot-password" className="text-sm text-primary-600 hover:text-primary-700">
+                <button 
+                  type="button"
+                  onClick={() => alert('Forgot password feature coming soon!')}
+                  className="text-sm text-primary-600 hover:text-primary-700 underline"
+                >
                   Forgot Password?
-                </Link>
+                </button>
               </div>
             )}
+
 
             {/* Submit Button */}
             <button
@@ -231,18 +236,12 @@ export default function LoginPage() {
         <div className="text-center mb-6">
           <p className="text-neutral-600">
             {isLogin ? "Don't have an account? " : "Already have an account? "}
-            {isLogin ? (
-              <Link href="/register" className="text-primary-600 hover:text-primary-700 font-semibold">
-                Create Account
-              </Link>
-            ) : (
-              <button
-                onClick={() => setIsLogin(true)}
-                className="text-primary-600 hover:text-primary-700 font-semibold"
-              >
-                Sign In
-              </button>
-            )}
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              className="text-primary-600 hover:text-primary-700 font-semibold underline"
+            >
+              {isLogin ? "Create Account" : "Sign In"}
+            </button>
           </p>
         </div>
 

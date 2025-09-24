@@ -181,16 +181,16 @@ export default function CareersPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 pb-20 md:pb-8">
         {/* Header */}
-        <header className="bg-white shadow-lg border-b-2 border-primary-200">
+        <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
           <div className="mobile-container">
             <div className="flex items-center justify-between h-16">
               <button 
                 onClick={() => setSelectedCareer(null)}
-                className="text-primary-700 hover:text-primary-800 p-2"
+                className="text-white hover:text-primary-200 p-2"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <h1 className="text-lg font-bold text-neutral-800">Career Details</h1>
+              <h1 className="text-lg font-bold text-white">Career Details</h1>
               <div className="w-9"></div>
             </div>
           </div>
@@ -308,10 +308,10 @@ export default function CareersPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 pb-20 md:pb-8">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-2 border-primary-200">
+      <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
           <div className="flex items-center justify-center h-16">
-            <h1 className="text-lg font-bold text-neutral-800">Career Paths</h1>
+            <h1 className="text-lg font-bold text-white">Career Paths</h1>
           </div>
         </div>
       </header>

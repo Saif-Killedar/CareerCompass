@@ -129,10 +129,10 @@ export default function CollegesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 pb-20 md:pb-8">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-2 border-primary-200">
+      <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
           <div className="flex items-center justify-center h-16">
-            <h1 className="text-lg font-bold text-neutral-800">Government Colleges</h1>
+            <h1 className="text-lg font-bold text-white">Government Colleges</h1>
           </div>
         </div>
       </header>

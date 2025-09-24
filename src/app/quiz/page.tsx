@@ -157,17 +157,16 @@ export default function QuizPage() {
     setCurrentQuestion(0);
     setAnswers({});
     setShowResults(false);
-    setResults(null);
   };
 
   if (showResults && results) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 mobile-safe-bottom">
         {/* Header */}
-        <header className="bg-white shadow-lg border-b-2 border-primary-200">
+        <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
           <div className="mobile-container">
             <div className="flex items-center justify-center h-16">
-              <h1 className="text-lg font-bold text-neutral-800">Quiz Results</h1>
+              <h1 className="text-lg font-bold text-white">Your Career Compass Results</h1>
             </div>
           </div>
         </header>
@@ -176,7 +175,7 @@ export default function QuizPage() {
         <div className="mobile-container py-8">
           <div className="text-center mb-8">
             <div className="w-20 h-20 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Target className="w-10 h-10 text-white" />
+              <span className="text-3xl">🎯</span>
             </div>
             <h2 className="text-2xl font-bold text-neutral-800 mb-2">Your Recommended Stream</h2>
             <p className="text-neutral-600">Based on your interests and preferences</p>
@@ -269,14 +268,14 @@ export default function QuizPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 mobile-safe-bottom">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-2 border-primary-200">
+      <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16">
-            <div className="text-sm text-neutral-600">
+            <div className="text-sm text-primary-100">
               {currentQuestion + 1}/{questions.length}
             </div>
-            <h1 className="text-lg font-bold text-neutral-800">Career Quiz</h1>
-            <div className="text-sm text-neutral-600">
+            <h1 className="text-lg font-bold text-white">Career Quiz</h1>
+            <div className="text-sm text-primary-100">
               {Math.round(((currentQuestion + 1) / questions.length) * 100)}%
             </div>
           </div>

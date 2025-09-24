@@ -177,17 +177,10 @@ export default function TimelinePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 pb-20 md:pb-8">
       {/* Header */}
-      <header className="bg-white shadow-lg border-b-2 border-primary-200">
+      <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
-          <div className="flex items-center justify-between h-16">
-            <div></div>
-            <h1 className="text-lg font-bold text-neutral-800">Important Timeline</h1>
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg"
-            >
-              <Filter className="w-5 h-5" />
-            </button>
+          <div className="flex items-center justify-center h-16">
+            <h1 className="text-lg font-bold text-white">Important Timeline</h1>
           </div>
         </div>
       </header>

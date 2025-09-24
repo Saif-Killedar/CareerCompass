@@ -39,6 +39,13 @@ const navigationItems = [
     icon: Clock,
     activeColor: 'bg-primary-600',
     hoverColor: 'group-hover:bg-primary-600'
+  },
+  {
+    name: 'Dashboard',
+    href: '/dashboard',
+    icon: Users,
+    activeColor: 'bg-primary-600',
+    hoverColor: 'group-hover:bg-primary-600'
   }
 ];
 
