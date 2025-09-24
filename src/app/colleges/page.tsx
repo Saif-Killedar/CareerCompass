@@ -131,18 +131,8 @@ export default function CollegesPage() {
       {/* Header */}
       <header className="bg-white shadow-lg border-b-2 border-primary-200">
         <div className="mobile-container">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-primary-700 hover:text-primary-800">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-semibold">Back</span>
-            </Link>
+          <div className="flex items-center justify-center h-16">
             <h1 className="text-lg font-bold text-neutral-800">Government Colleges</h1>
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg"
-            >
-              <Filter className="w-5 h-5" />
-            </button>
           </div>
         </div>
       </header>
@@ -151,52 +141,154 @@ export default function CollegesPage() {
       <div className="bg-white border-b border-neutral-200">
         <div className="mobile-container py-4">
           {/* Search Bar */}
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search colleges by name or location..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
+          <div className="mb-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search colleges... (e.g., Srinagar, Jammu, BSc, BCom)"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+            </div>
+            
+            {/* Search Suggestions */}
+            <div className="mt-3">
+              <p className="text-xs text-neutral-500 mb-2">💡 Popular searches:</p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSearchTerm('Srinagar')}
+                  className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
+                >
+                  🏔️ Srinagar
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Jammu')}
+                  className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium hover:bg-green-200 transition-colors"
+                >
+                  🏛️ Jammu
+                </button>
+                <button
+                  onClick={() => setSearchTerm('BSc')}
+                  className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium hover:bg-purple-200 transition-colors"
+                >
+                  🔬 BSc Science
+                </button>
+                <button
+                  onClick={() => setSearchTerm('BCom')}
+                  className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium hover:bg-orange-200 transition-colors"
+                >
+                  💼 BCom Commerce
+                </button>
+                <button
+                  onClick={() => setSearchTerm('BCA')}
+                  className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium hover:bg-indigo-200 transition-colors"
+                >
+                  💻 BCA Computer
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Government')}
+                  className="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-medium hover:bg-pink-200 transition-colors"
+                >
+                  🏛️ Government
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Baramulla')}
+                  className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-medium hover:bg-teal-200 transition-colors"
+                >
+                  🌲 Baramulla
+                </button>
+                <button
+                  onClick={() => setSearchTerm('BA')}
+                  className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium hover:bg-yellow-200 transition-colors"
+                >
+                  📖 BA Arts
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* Filter Dropdowns */}
-          {showFilters && (
-            <div className="grid grid-cols-2 gap-4">
-              <select
-                value={selectedDistrict}
-                onChange={(e) => setSelectedDistrict(e.target.value)}
-                className="p-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              >
-                {districts.map(district => (
-                  <option key={district} value={district}>{district}</option>
-                ))}
-              </select>
-              
-              <select
-                value={selectedCourse}
-                onChange={(e) => setSelectedCourse(e.target.value)}
-                className="p-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              >
-                {courses.map(course => (
-                  <option key={course} value={course}>{course}</option>
-                ))}
-              </select>
+          {/* Professional Filter Section */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-neutral-700 flex items-center">
+              <Filter className="w-4 h-4 mr-2" />
+              Filter Colleges
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* District Filter */}
+              <div className="bg-gradient-to-r from-blue-50 to-primary-50 rounded-xl p-4 border border-blue-200">
+                <label className="flex items-center text-sm font-semibold text-blue-700 mb-3">
+                  📍 Select District
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedDistrict}
+                    onChange={(e) => setSelectedDistrict(e.target.value)}
+                    className="w-full p-4 border-2 border-blue-300 rounded-xl focus:ring-3 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm font-medium shadow-sm appearance-none cursor-pointer hover:border-blue-400 transition-colors"
+                  >
+                    <option value="All Districts" className="font-medium py-2">🌍 All Districts in J&K</option>
+                    <option value="Srinagar" className="py-2">🏔️ Srinagar</option>
+                    <option value="Jammu" className="py-2">🏛️ Jammu</option>
+                    <option value="Baramulla" className="py-2">🌲 Baramulla</option>
+                    <option value="Anantnag" className="py-2">🏞️ Anantnag</option>
+                    <option value="Rajouri" className="py-2">⛰️ Rajouri</option>
+                    <option value="Kathua" className="py-2">🌾 Kathua</option>
+                  </select>
+                  {/* Custom Dropdown Arrow */}
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-xs text-blue-600 mt-2">Choose your preferred district</p>
+              </div>
+
+              {/* Course Filter */}
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200">
+                <label className="flex items-center text-sm font-semibold text-green-700 mb-3">
+                  🎓 Select Course
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedCourse}
+                    onChange={(e) => setSelectedCourse(e.target.value)}
+                    className="w-full p-4 border-2 border-green-300 rounded-xl focus:ring-3 focus:ring-green-500 focus:border-green-500 bg-white text-sm font-medium shadow-sm appearance-none cursor-pointer hover:border-green-400 transition-colors"
+                  >
+                    <option value="All Courses" className="font-medium py-2">📚 All Available Courses</option>
+                    <option value="BA" className="py-2">📖 Bachelor of Arts (BA)</option>
+                    <option value="BSc" className="py-2">🔬 Bachelor of Science (BSc)</option>
+                    <option value="BCom" className="py-2">💼 Bachelor of Commerce (BCom)</option>
+                    <option value="BCA" className="py-2">💻 Bachelor of Computer Applications (BCA)</option>
+                    <option value="BBA" className="py-2">📊 Bachelor of Business Administration (BBA)</option>
+                    <option value="B.Ed" className="py-2">👨‍🏫 Bachelor of Education (B.Ed)</option>
+                  </select>
+                  {/* Custom Dropdown Arrow */}
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-xs text-green-600 mt-2">Pick your desired program</p>
+              </div>
             </div>
-          )}
+
+            {/* Filter Results Summary */}
+            <div className="bg-primary-50 rounded-lg p-3">
+              <p className="text-sm text-primary-700 font-medium">
+                📊 Found {filteredColleges.length} colleges
+                {selectedDistrict !== 'All Districts' && ` in ${selectedDistrict}`}
+                {selectedCourse !== 'All Courses' && ` offering ${selectedCourse}`}
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {/* Results Summary */}
-      <div className="mobile-container py-4">
-        <p className="text-sm text-neutral-600">
-          Found {filteredColleges.length} colleges
-          {selectedDistrict !== 'All Districts' && ` in ${selectedDistrict}`}
-          {selectedCourse !== 'All Courses' && ` offering ${selectedCourse}`}
-        </p>
-      </div>
 
       {/* Colleges List */}
       <div className="mobile-container space-y-4">

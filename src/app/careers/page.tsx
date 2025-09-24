@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Search, TrendingUp, DollarSign, Users, BookOpen, Award, Building, Briefcase, GraduationCap, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Search, TrendingUp, DollarSign, Users, BookOpen, Award, Building, Briefcase, GraduationCap, ChevronRight, Filter } from 'lucide-react';
 
 interface Career {
   id: number;
@@ -186,13 +186,12 @@ export default function CareersPage() {
             <div className="flex items-center justify-between h-16">
               <button 
                 onClick={() => setSelectedCareer(null)}
-                className="flex items-center text-primary-700 hover:text-primary-800"
+                className="text-primary-700 hover:text-primary-800 p-2"
               >
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                <span className="font-semibold">Back</span>
+                <ArrowLeft className="w-5 h-5" />
               </button>
               <h1 className="text-lg font-bold text-neutral-800">Career Details</h1>
-              <div className="w-20"></div>
+              <div className="w-9"></div>
             </div>
           </div>
         </header>
@@ -311,13 +310,8 @@ export default function CareersPage() {
       {/* Header */}
       <header className="bg-white shadow-lg border-b-2 border-primary-200">
         <div className="mobile-container">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-primary-700 hover:text-primary-800">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-semibold">Back</span>
-            </Link>
+          <div className="flex items-center justify-center h-16">
             <h1 className="text-lg font-bold text-neutral-800">Career Paths</h1>
-            <div className="w-20"></div>
           </div>
         </div>
       </header>
@@ -326,47 +320,136 @@ export default function CareersPage() {
       <div className="bg-white border-b border-neutral-200">
         <div className="mobile-container py-4">
           {/* Search Bar */}
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search careers..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-          </div>
-
-          {/* Filter Dropdowns */}
-          <div className="grid grid-cols-2 gap-4">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="p-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            >
-              {categories.map(category => (
-                <option key={category} value={category}>{category}</option>
-              ))}
-            </select>
+          <div className="mb-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search careers... (e.g., Doctor, Engineer, Teacher, IAS)"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+            </div>
             
-            <select
-              value={selectedStream}
-              onChange={(e) => setSelectedStream(e.target.value)}
-              className="p-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            >
-              {streams.map(stream => (
-                <option key={stream} value={stream}>{stream}</option>
-              ))}
-            </select>
+            {/* Search Suggestions */}
+            <div className="mt-3">
+              <p className="text-xs text-neutral-500 mb-2">💡 Popular searches:</p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSearchTerm('Doctor')}
+                  className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
+                >
+                  🩺 Doctor
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Engineer')}
+                  className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium hover:bg-green-200 transition-colors"
+                >
+                  ⚙️ Engineer
+                </button>
+                <button
+                  onClick={() => setSearchTerm('IAS')}
+                  className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium hover:bg-purple-200 transition-colors"
+                >
+                  🏛️ IAS Officer
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Teacher')}
+                  className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium hover:bg-orange-200 transition-colors"
+                >
+                  👨‍🏫 Teacher
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Software')}
+                  className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium hover:bg-indigo-200 transition-colors"
+                >
+                  💻 Software Developer
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Business')}
+                  className="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-medium hover:bg-pink-200 transition-colors"
+                >
+                  💼 Business
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Results Summary */}
-      <div className="mobile-container py-4">
-        <p className="text-sm text-neutral-600">
-          Found {filteredCareers.length} career paths
-        </p>
+          {/* Professional Filter Section */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-neutral-700 flex items-center">
+              <Filter className="w-4 h-4 mr-2" />
+              Filter Career Paths
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {/* Category Filter */}
+              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-4 border border-purple-200">
+                <label className="flex items-center text-sm font-semibold text-purple-700 mb-3">
+                  🏢 Select Category
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full p-4 border-2 border-purple-300 rounded-xl focus:ring-3 focus:ring-purple-500 focus:border-purple-500 bg-white text-sm font-medium shadow-sm appearance-none cursor-pointer hover:border-purple-400 transition-colors"
+                  >
+                    <option value="All Categories" className="font-medium py-2">🌐 All Career Categories</option>
+                    <option value="Government" className="py-2">🏛️ Government Sector</option>
+                    <option value="Private" className="py-2">🏢 Private Sector</option>
+                    <option value="Entrepreneurship" className="py-2">🚀 Entrepreneurship</option>
+                  </select>
+                  {/* Custom Dropdown Arrow */}
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-xs text-purple-600 mt-2">Choose your preferred sector</p>
+              </div>
+
+              {/* Stream Filter */}
+              <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-4 border border-orange-200">
+                <label className="flex items-center text-sm font-semibold text-orange-700 mb-3">
+                  📚 Select Stream
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedStream}
+                    onChange={(e) => setSelectedStream(e.target.value)}
+                    className="w-full p-4 border-2 border-orange-300 rounded-xl focus:ring-3 focus:ring-orange-500 focus:border-orange-500 bg-white text-sm font-medium shadow-sm appearance-none cursor-pointer hover:border-orange-400 transition-colors"
+                  >
+                    <option value="All Streams" className="font-medium py-2">📖 All Educational Streams</option>
+                    <option value="Science" className="py-2">🔬 Science Stream</option>
+                    <option value="Commerce" className="py-2">💼 Commerce Stream</option>
+                    <option value="Arts" className="py-2">🎨 Arts/Humanities Stream</option>
+                    <option value="Vocational" className="py-2">🛠️ Vocational/Technical</option>
+                    <option value="Any Stream" className="py-2">🌟 Any Stream Welcome</option>
+                  </select>
+                  {/* Custom Dropdown Arrow */}
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-xs text-orange-600 mt-2">Match your educational background</p>
+              </div>
+            </div>
+
+            {/* Filter Results Summary */}
+            <div className="bg-primary-50 rounded-lg p-3">
+              <p className="text-sm text-primary-700 font-medium">
+                🎯 Found {filteredCareers.length} career paths
+                {selectedCategory !== 'All Categories' && ` in ${selectedCategory}`}
+                {selectedStream !== 'All Streams' && ` for ${selectedStream}`}
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       {/* Careers List */}

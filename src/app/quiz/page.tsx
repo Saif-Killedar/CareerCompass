@@ -70,30 +70,30 @@ const questions: Question[] = [
 const streamResults = {
   science: {
     title: "Science Stream",
-    description: "You have a natural inclination towards scientific thinking and problem-solving.",
-    careers: ["Doctor", "Engineer", "Scientist", "Researcher", "Lab Technician"],
+    description: "🔬 Excellent Choice! You're naturally curious about how things work and love solving complex problems through scientific methods and logical thinking.",
+    careers: ["Doctor", "Engineer", "Scientist", "Researcher", "Lab Technician", "Data Analyst"],
     subjects: ["Physics", "Chemistry", "Biology", "Mathematics"],
     color: "bg-blue-500"
   },
   commerce: {
     title: "Commerce Stream",
-    description: "You show strong business acumen and financial understanding.",
-    careers: ["CA/CS", "Business Owner", "Banker", "Manager", "Economist"],
+    description: "💼 Great Fit! You have a sharp business mind and understand money matters. You're destined for the world of business and finance.",
+    careers: ["CA/CS", "Business Owner", "Banker", "Manager", "Economist", "Financial Advisor"],
     subjects: ["Economics", "Accountancy", "Business Studies", "Mathematics"],
     color: "bg-green-500"
   },
   arts: {
     title: "Arts/Humanities Stream",
-    description: "You have excellent communication skills and social awareness.",
-    careers: ["IAS/IPS", "Lawyer", "Teacher", "Journalist", "Psychologist"],
+    description: "📚 Perfect Match! You're a natural communicator with deep empathy and social awareness. You understand people and society well.",
+    careers: ["IAS/IPS", "Lawyer", "Teacher", "Journalist", "Psychologist", "Social Worker"],
     subjects: ["History", "Political Science", "Psychology", "Literature"],
     color: "bg-purple-500"
   },
   vocational: {
-    title: "Vocational/Skill-based",
-    description: "You excel in practical skills and hands-on work.",
-    careers: ["IT Professional", "Designer", "Technician", "Entrepreneur"],
-    subjects: ["Computer Applications", "Skill Development", "Trade Courses"],
+    title: "Vocational & Technical Skills",
+    description: "🎯 Perfect Match! You're a hands-on learner who excels in practical, skill-based work. You prefer learning by doing and creating real-world solutions.",
+    careers: ["Software Developer", "Graphic Designer", "Digital Marketer", "Technician", "Entrepreneur", "Web Developer"],
+    subjects: ["Computer Applications", "Digital Skills", "Trade Courses", "Entrepreneurship", "Technical Training"],
     color: "bg-orange-500"
   }
 };
@@ -166,13 +166,8 @@ export default function QuizPage() {
         {/* Header */}
         <header className="bg-white shadow-lg border-b-2 border-primary-200">
           <div className="mobile-container">
-            <div className="flex items-center justify-between h-16">
-              <Link href="/" className="flex items-center text-primary-700 hover:text-primary-800">
-                <ArrowLeft className="w-5 h-5 mr-2" />
-                <span className="font-semibold">Back to Home</span>
-              </Link>
+            <div className="flex items-center justify-center h-16">
               <h1 className="text-lg font-bold text-neutral-800">Quiz Results</h1>
-              <div className="w-20"></div>
             </div>
           </div>
         </header>
@@ -189,9 +184,14 @@ export default function QuizPage() {
 
           {/* Main Result Card */}
           <div className="bg-white rounded-2xl shadow-soft border border-primary-100 p-6 mb-6">
-            <div className={`w-full h-2 ${results.details.color} rounded-full mb-4`}></div>
-            <h3 className="text-xl font-bold text-neutral-800 mb-2">{results.details.title}</h3>
-            <p className="text-neutral-600 mb-4">{results.details.description}</p>
+            <div className="text-center mb-6">
+              <div className={`w-16 h-16 ${results.details.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <span className="text-2xl">🎯</span>
+              </div>
+              <h3 className="text-2xl font-bold text-neutral-800 mb-3">{results.details.title}</h3>
+              <div className={`w-full h-3 ${results.details.color} rounded-full mb-4 opacity-20`}></div>
+              <p className="text-neutral-700 text-lg leading-relaxed">{results.details.description}</p>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -210,18 +210,18 @@ export default function QuizPage() {
               </div>
               
               <div>
-                <h4 className="font-semibold text-neutral-700 mb-2 flex items-center">
+                <h4 className="font-semibold text-neutral-700 mb-3 flex items-center">
                   <Users className="w-4 h-4 mr-2" />
-                  Career Opportunities
+                  🚀 Career Opportunities
                 </h4>
-                <ul className="space-y-1">
+                <div className="space-y-2">
                   {results.details.careers.map((career: string, index: number) => (
-                    <li key={index} className="text-sm text-neutral-600 flex items-center">
-                      <CheckCircle className="w-3 h-3 mr-2 text-blue-500" />
-                      {career}
-                    </li>
+                    <div key={index} className="bg-primary-50 rounded-lg p-3 flex items-center">
+                      <CheckCircle className="w-4 h-4 mr-3 text-primary-500 flex-shrink-0" />
+                      <span className="text-sm font-medium text-neutral-700">{career}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -272,13 +272,12 @@ export default function QuizPage() {
       <header className="bg-white shadow-lg border-b-2 border-primary-200">
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-primary-700 hover:text-primary-800">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-semibold">Back</span>
-            </Link>
-            <h1 className="text-lg font-bold text-neutral-800">Career Quiz</h1>
             <div className="text-sm text-neutral-600">
               {currentQuestion + 1}/{questions.length}
+            </div>
+            <h1 className="text-lg font-bold text-neutral-800">Career Quiz</h1>
+            <div className="text-sm text-neutral-600">
+              {Math.round(((currentQuestion + 1) / questions.length) * 100)}%
             </div>
           </div>
         </div>
@@ -297,7 +296,7 @@ export default function QuizPage() {
       </div>
 
       {/* Quiz Content */}
-      <div className="mobile-container py-8">
+      <div className="mobile-container py-8 pb-24">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <Lightbulb className="w-8 h-8 text-white" />

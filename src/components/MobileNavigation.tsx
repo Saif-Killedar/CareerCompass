@@ -51,7 +51,7 @@ export default function MobileNavigation() {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 border-t-2 border-government-500 shadow-2xl z-50 lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 bg-primary-600 border-t-2 border-government-500 shadow-2xl z-50 lg:hidden">
       <div className="safe-area-bottom">
         <div className="flex items-center justify-around px-2 py-3">
           {navigationItems.map((item) => {

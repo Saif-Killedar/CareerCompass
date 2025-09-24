@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, Clock, Bell, AlertCircle, CheckCircle, Filter, BookOpen, Award, DollarSign } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Bell, AlertCircle, CheckCircle, Filter, BookOpen, Award, DollarSign, Search } from 'lucide-react';
 
 interface TimelineEvent {
   id: number;
@@ -112,17 +112,16 @@ const priorities = ["All", "High", "Medium", "Low"];
 const statuses = ["All", "Upcoming", "Ongoing", "Completed"];
 
 export default function TimelinePage() {
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedPriority, setSelectedPriority] = useState('All');
-  const [selectedStatus, setSelectedStatus] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredEvents = events.filter(event => {
+    const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         event.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || event.category === selectedCategory.toLowerCase();
-    const matchesPriority = selectedPriority === 'All' || event.priority === selectedPriority.toLowerCase();
-    const matchesStatus = selectedStatus === 'All' || event.status === selectedStatus.toLowerCase();
     
-    return matchesCategory && matchesPriority && matchesStatus;
+    return matchesSearch && matchesCategory;
   });
 
   const getCategoryIcon = (category: string) => {
@@ -181,10 +180,7 @@ export default function TimelinePage() {
       <header className="bg-white shadow-lg border-b-2 border-primary-200">
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-primary-700 hover:text-primary-800">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-semibold">Back</span>
-            </Link>
+            <div></div>
             <h1 className="text-lg font-bold text-neutral-800">Important Timeline</h1>
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -196,44 +192,113 @@ export default function TimelinePage() {
         </div>
       </header>
 
-      {/* Filters */}
-      {showFilters && (
-        <div className="bg-white border-b border-neutral-200">
-          <div className="mobile-container py-4">
-            <div className="grid grid-cols-3 gap-3">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="p-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-              
-              <select
-                value={selectedPriority}
-                onChange={(e) => setSelectedPriority(e.target.value)}
-                className="p-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              >
-                {priorities.map(priority => (
-                  <option key={priority} value={priority}>{priority}</option>
-                ))}
-              </select>
-
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="p-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              >
-                {statuses.map(status => (
-                  <option key={status} value={status}>{status}</option>
-                ))}
-              </select>
+      {/* Search and Filters */}
+      <div className="bg-white border-b border-neutral-200">
+        <div className="mobile-container py-4">
+          {/* Search Bar */}
+          <div className="mb-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search deadlines... (e.g., JEE, NEET, Admission, Scholarship)"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+            </div>
+            
+            {/* Search Suggestions */}
+            <div className="mt-3">
+              <p className="text-xs text-neutral-500 mb-2">💡 Popular searches:</p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSearchTerm('JEE')}
+                  className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
+                >
+                  📚 JEE Main
+                </button>
+                <button
+                  onClick={() => setSearchTerm('NEET')}
+                  className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium hover:bg-green-200 transition-colors"
+                >
+                  🩺 NEET
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Admission')}
+                  className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium hover:bg-purple-200 transition-colors"
+                >
+                  🎓 Admissions
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Scholarship')}
+                  className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium hover:bg-orange-200 transition-colors"
+                >
+                  💰 Scholarships
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Board')}
+                  className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium hover:bg-indigo-200 transition-colors"
+                >
+                  📝 Board Exams
+                </button>
+                <button
+                  onClick={() => setSearchTerm('Result')}
+                  className="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-medium hover:bg-pink-200 transition-colors"
+                >
+                  📊 Results
+                </button>
+              </div>
             </div>
           </div>
+
+          {/* Professional Filter Section */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-neutral-700 flex items-center">
+              <Filter className="w-4 h-4 mr-2" />
+              Filter Timeline Events
+            </h3>
+            
+            {/* Category Filter */}
+            <div className="max-w-md mx-auto">
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-4 border border-red-200">
+                <label className="flex items-center text-sm font-semibold text-red-700 mb-3">
+                  📋 Select Category
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full p-3 border-2 border-red-300 rounded-xl focus:ring-3 focus:ring-red-500 focus:border-red-500 bg-white text-sm font-medium shadow-sm appearance-none cursor-pointer hover:border-red-400 transition-colors"
+                  >
+                    <option value="All" className="font-medium py-2">📅 All Timeline Events</option>
+                    <option value="Admission" className="py-2">🎓 College Admissions</option>
+                    <option value="Scholarship" className="py-2">💰 Scholarship Applications</option>
+                    <option value="Exam" className="py-2">📝 Entrance Exams</option>
+                    <option value="Result" className="py-2">📊 Result Announcements</option>
+                  </select>
+                  {/* Custom Dropdown Arrow */}
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-xs text-red-600 mt-2">Filter events by type</p>
+              </div>
+            </div>
+
+            {/* Filter Results Summary */}
+            <div className="bg-primary-50 rounded-lg p-3">
+              <p className="text-sm text-primary-700 font-medium">
+                📅 Found {filteredEvents.length} timeline events
+                {selectedCategory !== 'All' && ` in ${selectedCategory} category`}
+              </p>
+            </div>
+          </div>
+
         </div>
-      )}
+      </div>
 
       {/* Quick Stats */}
       <div className="mobile-container py-4">
