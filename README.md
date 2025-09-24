@@ -1,6 +1,6 @@
 # CareerCompass J&K - Mobile Career Guidance Platform
 
-> **Knowledge Is Power** - One-Stop Career & Education Advisor for Students of Jammu & Kashmir
+**Knowledge Is Power** - One-Stop Career & Education Advisor for Students of Jammu & Kashmir
 
 [![Government of J&K](https://img.shields.io/badge/Government-Jammu%20%26%20Kashmir-blue)](https://jk.gov.in)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org)
@@ -142,8 +142,8 @@ careercompass-mobile/
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/jk-govt/careercompass-mobile.git
-cd careercompass-mobile
+git clone https://github.com/Saif-Killedar/CareerCompass.git
+cd CareerCompass
 ```
 
 2. **Install dependencies**

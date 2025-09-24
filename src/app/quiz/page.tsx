@@ -237,10 +237,10 @@ export default function QuizPage() {
                     <div className="w-24 h-2 bg-neutral-200 rounded-full overflow-hidden">
                       <div 
                         className={`h-full ${streamResults[stream as keyof typeof streamResults].color}`}
-                        style={{ width: `${(score / 15) * 100}%` }}
+                        style={{ width: `${((score as number) / 15) * 100}%` }}
                       ></div>
                     </div>
-                    <span className="text-sm text-neutral-600 w-8">{score}</span>
+                    <span className="text-sm text-neutral-600 w-8">{score as number}</span>
                   </div>
                 </div>
               ))}
