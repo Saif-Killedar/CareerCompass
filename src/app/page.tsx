@@ -108,21 +108,21 @@ export default function HomePage() {
       from: 'Srinagar',
       achievement: 'IAS Officer',
       quote: 'CareerCompass helped me understand the path from B.A. to civil services',
-      image: '/success-1.jpg'
+      image: '/images/students/success-1.jpg'
     },
     {
       name: 'Priya Sharma',
       from: 'Jammu',
       achievement: 'Software Engineer',
       quote: 'I discovered my passion for technology through the career quiz',
-      image: '/success-2.jpg'
+      image: '/images/students/success-2.jpg'
     },
     {
       name: 'Mohammad Ali',
       from: 'Baramulla',
       achievement: 'Doctor',
       quote: 'The platform showed me how to get into Government Medical College',
-      image: '/success-3.jpg'
+      image: '/images/students/success-3.jpg'
     }
   ]
 
@@ -133,12 +133,12 @@ export default function HomePage() {
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Text-Based Logo */}
-            <Link href="/" className="flex flex-col">
-              <h1 className="text-xl sm:text-2xl font-bold text-white">
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"><Target className="w-5 h-5 text-white" /></div><h1 className="text-xl sm:text-2xl font-bold text-white">
                 CareerCompass
               </h1>
               <p className="text-xs text-primary-100">
-                J&K Career Guidance
+                
               </p>
             </Link>
 
@@ -274,18 +274,17 @@ export default function HomePage() {
               <div className="relative rounded-2xl overflow-hidden shadow-strong bg-neutral-900">
                 {/* Video Container */}
                 <div className="relative aspect-video">
-                  <video 
-                    className="w-full h-full object-cover"
-                    controls
+                  <video ref={(el) => { if (el) { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !el.paused) { el.pause(); } }); }, { threshold: 0.5 }); observer.observe(el); } }} 
+                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); }}
+                    controls onPlay={(e) => { e.target.nextElementSibling.style.display = "none"; }} onPause={(e) => { e.target.nextElementSibling.style.display = "flex"; }} onPlay={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }} onPause={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
                     poster="/images/hero/video-thumbnail.jpg"
                   >
-                    <source src="/videos/demos/knowledge-impact.mp4" type="video/mp4" />
                     <source src="/videos/demos/knowledge-impact.webm" type="video/webm" />
                     Your browser does not support the video tag.
                   </video>
                   
                   {/* Play Button Overlay (optional) */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors duration-300 group">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors duration-300 group pointer-events-none video-overlay">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <svg className="w-6 h-6 sm:w-8 sm:h-8 text-primary-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z"/>
@@ -328,18 +327,18 @@ export default function HomePage() {
               <div className="relative rounded-2xl overflow-hidden shadow-strong bg-neutral-900">
                 {/* Video Container */}
                 <div className="relative aspect-video">
-                  <video 
-                    className="w-full h-full object-cover"
-                    controls
+                  <video ref={(el) => { if (el) { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !el.paused) { el.pause(); } }); }, { threshold: 0.5 }); observer.observe(el); } }} 
+                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); }}
+                    controls onPlay={(e) => { e.target.nextElementSibling.style.display = "none"; }} onPause={(e) => { e.target.nextElementSibling.style.display = "flex"; }} onPlay={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }} onPause={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
                     poster="/images/steps/how-it-works-thumbnail.jpg"
                   >
-                    <source src="/videos/tutorials/how-it-works.mp4" type="video/mp4" />
+                    
                     <source src="/videos/tutorials/how-it-works.webm" type="video/webm" />
                     Your browser does not support the video tag.
                   </video>
                   
                   {/* Play Button Overlay (optional) */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors duration-300 group">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/10 transition-colors duration-300 group pointer-events-none video-overlay">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <svg className="w-6 h-6 sm:w-8 sm:h-8 text-primary-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z"/>
@@ -717,7 +716,7 @@ export default function HomePage() {
                           <img
                             src={`/images/students/${story.name.toLowerCase().replace(' ', '-')}.jpg`}
                             alt={story.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover" onPlay={(e) => { const video = e.target; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); }}
                             onError={(e) => {
                               // Fallback to avatar if image not found
                               const target = e.target as HTMLImageElement;
