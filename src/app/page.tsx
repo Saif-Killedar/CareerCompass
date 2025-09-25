@@ -274,10 +274,33 @@ export default function HomePage() {
               <div className="relative rounded-2xl overflow-hidden shadow-strong bg-neutral-900">
                 {/* Video Container */}
                 <div className="relative aspect-video">
-                  <video ref={(el) => { if (el) { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !el.paused) { el.pause(); } }); }, { threshold: 0.5 }); observer.observe(el); } }} 
-                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target as HTMLVideoElement; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }}
-                    controls onPause={(e) => { const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
+                  <video 
+                    className="w-full h-full object-cover" 
+                    controls
                     poster="/images/hero/video-thumbnail.jpg"
+                    onPlay={(e) => {
+                      const video = e.target as HTMLVideoElement;
+                      const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                          if (!entry.isIntersecting && !video.paused) {
+                            video.pause();
+                          }
+                        });
+                      }, { threshold: 0.3 });
+                      observer.observe(video);
+                      
+                      const overlay = video.nextElementSibling as HTMLElement;
+                      if (overlay && overlay.classList.contains("video-overlay")) {
+                        overlay.style.display = "none";
+                      }
+                    }}
+                    onPause={(e) => {
+                      const video = e.target as HTMLVideoElement;
+                      const overlay = video.nextElementSibling as HTMLElement;
+                      if (overlay && overlay.classList.contains("video-overlay")) {
+                        overlay.style.display = "flex";
+                      }
+                    }}
                   >
                     <source src="/videos/demos/knowledge-impact.webm" type="video/webm" />
                     Your browser does not support the video tag.
@@ -327,10 +350,33 @@ export default function HomePage() {
               <div className="relative rounded-2xl overflow-hidden shadow-strong bg-neutral-900">
                 {/* Video Container */}
                 <div className="relative aspect-video">
-                  <video ref={(el) => { if (el) { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !el.paused) { el.pause(); } }); }, { threshold: 0.5 }); observer.observe(el); } }} 
-                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target as HTMLVideoElement; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }}
-                    controls onPause={(e) => { const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
+                  <video 
+                    className="w-full h-full object-cover" 
+                    controls
                     poster="/images/steps/how-it-works-thumbnail.jpg"
+                    onPlay={(e) => {
+                      const video = e.target as HTMLVideoElement;
+                      const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                          if (!entry.isIntersecting && !video.paused) {
+                            video.pause();
+                          }
+                        });
+                      }, { threshold: 0.3 });
+                      observer.observe(video);
+                      
+                      const overlay = video.nextElementSibling as HTMLElement;
+                      if (overlay && overlay.classList.contains("video-overlay")) {
+                        overlay.style.display = "none";
+                      }
+                    }}
+                    onPause={(e) => {
+                      const video = e.target as HTMLVideoElement;
+                      const overlay = video.nextElementSibling as HTMLElement;
+                      if (overlay && overlay.classList.contains("video-overlay")) {
+                        overlay.style.display = "flex";
+                      }
+                    }}
                   >
                     
                     <source src="/videos/tutorials/how-it-works.webm" type="video/webm" />
