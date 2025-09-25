@@ -275,8 +275,8 @@ export default function HomePage() {
                 {/* Video Container */}
                 <div className="relative aspect-video">
                   <video ref={(el) => { if (el) { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !el.paused) { el.pause(); } }); }, { threshold: 0.5 }); observer.observe(el); } }} 
-                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); }}
-                    controls onPlay={(e) => { e.target.nextElementSibling.style.display = "none"; }} onPause={(e) => { e.target.nextElementSibling.style.display = "flex"; }} onPlay={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }} onPause={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
+                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target as HTMLVideoElement; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }}
+                    controls onPause={(e) => { const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
                     poster="/images/hero/video-thumbnail.jpg"
                   >
                     <source src="/videos/demos/knowledge-impact.webm" type="video/webm" />
@@ -328,8 +328,8 @@ export default function HomePage() {
                 {/* Video Container */}
                 <div className="relative aspect-video">
                   <video ref={(el) => { if (el) { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !el.paused) { el.pause(); } }); }, { threshold: 0.5 }); observer.observe(el); } }} 
-                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); }}
-                    controls onPlay={(e) => { e.target.nextElementSibling.style.display = "none"; }} onPause={(e) => { e.target.nextElementSibling.style.display = "flex"; }} onPlay={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }} onPause={(e) => { const overlay = e.target.nextElementSibling; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
+                    className="w-full h-full object-cover" onPlay={(e) => { const video = e.target as HTMLVideoElement; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "none"; } }}
+                    controls onPause={(e) => { const overlay = (e.target as HTMLVideoElement).nextElementSibling as HTMLElement; if (overlay && overlay.classList.contains("video-overlay")) { overlay.style.display = "flex"; } }}
                     poster="/images/steps/how-it-works-thumbnail.jpg"
                   >
                     
