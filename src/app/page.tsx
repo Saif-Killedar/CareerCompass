@@ -102,6 +102,7 @@ export default function HomePage() {
     }
   ]
 
+  // Updated for fresh deployment
   const successStories = [
     {
       name: 'Arjun Kumar',
