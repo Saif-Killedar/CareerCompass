@@ -763,7 +763,7 @@ export default function HomePage() {
                           <img
                             src={`/images/students/${story.name.toLowerCase().replace(' ', '-')}.jpg`}
                             alt={story.name}
-                            className="w-full h-full object-cover" onPlay={(e) => { const video = e.target; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (!entry.isIntersecting && !video.paused) { video.pause(); } }); }, { threshold: 0.3 }); observer.observe(video); }}
+                            className="w-full h-full object-cover"
                             onError={(e) => {
                               // Fallback to avatar if image not found
                               const target = e.target as HTMLImageElement;
