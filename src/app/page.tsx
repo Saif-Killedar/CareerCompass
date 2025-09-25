@@ -761,7 +761,7 @@ export default function HomePage() {
                       <div className="flex-shrink-0 w-full sm:w-1/3 relative">
                         <div className="h-48 sm:h-full relative overflow-hidden">
                           <img
-                            src={`/images/students/${story.name.toLowerCase().replace(' ', '-')}.jpg`}
+                            src={story.image}
                             alt={story.name}
                             className="w-full h-full object-cover"
                             onError={(e) => {

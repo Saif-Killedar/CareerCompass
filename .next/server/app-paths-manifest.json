@@ -1,14 +1,12 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/careers/page": "app/careers/page.js",
-  "/colleges/page": "app/colleges/page.js",
-  "/login/page": "app/login/page.js",
-  "/about/page": "app/about/page.js",
   "/page": "app/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/quiz/page": "app/quiz/page.js",
+  "/colleges/page": "app/colleges/page.js",
+  "/careers/page": "app/careers/page.js",
+  "/timeline/page": "app/timeline/page.js",
   "/profile/page": "app/profile/page.js",
   "/register/page": "app/register/page.js",
-  "/signout/page": "app/signout/page.js",
-  "/quiz/page": "app/quiz/page.js",
-  "/timeline/page": "app/timeline/page.js"
+  "/login/page": "app/login/page.js",
+  "/about/page": "app/about/page.js"
 }
