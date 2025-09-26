@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import ScholarshipAlerts from '../components/ScholarshipAlerts';
 import { 
   ArrowRight, 
   Users, 
@@ -112,7 +113,7 @@ export default function HomePage() {
       image: '/images/students/success-1.jpg'
     },
     {
-      name: 'Priya Sharma',
+      name: 'Aliya Shaikh',
       from: 'Jammu',
       achievement: 'Software Engineer',
       quote: 'I discovered my passion for technology through the career quiz',
@@ -801,7 +802,7 @@ export default function HomePage() {
                         </blockquote>
                         
                         <div className="text-sm text-neutral-500">
-                          — Success Story from CareerCompass
+                          — Success Story from Jammu & Kashmir
                         </div>
                       </div>
                     </div>
@@ -840,6 +841,56 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Scholarship Alerts Section */}
+      <section className="py-12 sm:py-16 bg-gradient-to-br from-neutral-50 to-primary-50">
+        <div className="mobile-container">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-800 mb-4">
+              🎓 Scholarship & Opportunity Alerts
+            </h2>
+            <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+              Never miss a scholarship opportunity! Get instant notifications for scholarships you qualify for
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <ScholarshipAlerts />
+          </div>
+
+          {/* Feature Highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div className="text-center p-6 bg-white rounded-xl shadow-lg">
+              <div className="w-12 h-12 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Award className="w-6 h-6 text-success-600" />
+              </div>
+              <h3 className="font-semibold text-neutral-800 mb-2">Smart Matching</h3>
+              <p className="text-sm text-neutral-600">
+                AI-powered matching based on your academic profile and eligibility criteria
+              </p>
+            </div>
+
+            <div className="text-center p-6 bg-white rounded-xl shadow-lg">
+              <div className="w-12 h-12 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-6 h-6 text-warning-600" />
+              </div>
+              <h3 className="font-semibold text-neutral-800 mb-2">Deadline Alerts</h3>
+              <p className="text-sm text-neutral-600">
+                Timely reminders so you never miss an application deadline
+              </p>
+            </div>
+
+            <div className="text-center p-6 bg-white rounded-xl shadow-lg">
+              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MapPin className="w-6 h-6 text-primary-600" />
+              </div>
+              <h3 className="font-semibold text-neutral-800 mb-2">J&K Focused</h3>
+              <p className="text-sm text-neutral-600">
+                Special focus on scholarships available for Jammu & Kashmir students
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-neutral-900 text-white py-8 sm:py-12 mobile-safe-bottom">
