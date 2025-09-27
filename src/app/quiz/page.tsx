@@ -182,10 +182,10 @@ export default function QuizPage() {
                     const colors = ['#3b82f6', '#10b981', '#8b5cf6']; // blue, green, purple
                     
                     return Object.entries(results.scores).map(([stream, score], index) => {
-                      const percentage = Number(score) / total;
+                      const percentage = (score as number) / (total as number);
                       const angle = percentage * 360;
                       const startAngle = currentAngle;
-                      const endAngle = currentAngle + angle;
+                      const endAngle = currentAngle + (angle as number);
                       
                       // Calculate path for pie slice
                       const startAngleRad = (startAngle * Math.PI) / 180;
@@ -236,7 +236,7 @@ export default function QuizPage() {
               <div className="space-y-3">
                 {Object.entries(results.scores).map(([stream, score], index) => {
                   const total = Object.values(results.scores).reduce((sum: number, s: unknown) => sum + Number(s), 0);
-                  const percentage = Math.round((Number(score) / total) * 100);
+                  const percentage = Math.round(((score as number) / (total as number)) * 100);
                   const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500'];
                   
                   return (
