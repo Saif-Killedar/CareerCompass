@@ -55,7 +55,7 @@ export default function MobileNavigation() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-primary-600 border-t-2 border-government-500 shadow-2xl z-50 lg:hidden">
       <div className="safe-area-bottom">
-        <div className="flex items-center justify-around px-2 py-2">
+        <div className="flex items-center justify-around px-2 py-1">
           {navigationItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -64,7 +64,7 @@ export default function MobileNavigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="flex flex-col items-center py-2 px-3 min-w-0 flex-1 group relative transition-all duration-200"
+                className="flex flex-col items-center py-1 px-3 min-w-0 flex-1 group relative transition-all duration-200"
               >
                 <div className={`w-11 h-11 mb-1 flex items-center justify-center rounded-2xl transition-all duration-300 relative ${
                   isActive 
