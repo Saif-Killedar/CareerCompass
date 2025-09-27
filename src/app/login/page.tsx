@@ -2,9 +2,17 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Eye, EyeOff, Mail, Lock, User, Phone, MapPin } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { 
+  ArrowLeft, Eye, EyeOff, User, Mail, Phone, MapPin, 
+  CheckCircle, AlertCircle, Upload, FileText, Camera, GraduationCap,
+  BookOpen, Target, Shield, Users, Check, Lock
+} from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function LoginPage() {
+  const { login, register } = useAuth();
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -16,10 +24,31 @@ export default function LoginPage() {
     confirmPassword: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login/register logic here
-    console.log('Form submitted:', formData);
+    
+    try {
+      if (isLogin) {
+        // Login with phone/email and password
+        const success = await login(formData.phone || formData.email, formData.password);
+        if (success) {
+          router.push('/');
+        } else {
+          alert('Login failed. Please check your credentials.');
+        }
+      } else {
+        // Register new user
+        const success = await register(formData);
+        if (success) {
+          router.push('/');
+        } else {
+          alert('Registration failed. Please try again.');
+        }
+      }
+    } catch (error) {
+      console.error('Auth error:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -36,13 +65,12 @@ export default function LoginPage() {
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center text-white hover:text-primary-200 transition-colors">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-medium">Home</span>
+              <ArrowLeft className="w-5 h-5" />
             </Link>
-            <h1 className="text-lg font-bold text-white">
-              {isLogin ? 'Sign In' : 'Create Account'}
+            <h1 className="text-lg font-bold text-white absolute left-1/2 transform -translate-x-1/2">
+              {isLogin ? 'Login' : 'Create Account'}
             </h1>
-            <div className="w-16"></div>
+            <div></div>
           </div>
         </div>
       </header>
@@ -88,45 +116,25 @@ export default function LoginPage() {
               </div>
             )}
 
-            {/* Email Field */}
+            {/* Mobile Number Field */}
             <div>
               <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                Email Address
+                Mobile Number
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
                 <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="Enter your email"
+                  placeholder="+91 9876543210"
                   className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   required
                 />
               </div>
             </div>
 
-            {/* Phone Field (Register only) */}
-            {!isLogin && (
-              <div>
-                <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                  Phone Number
-                </label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-5 h-5" />
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="+91 9876543210"
-                    className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    required={!isLogin}
-                  />
-                </div>
-              </div>
-            )}
 
             {/* Location Field (Register only) */}
             {!isLogin && (

@@ -131,8 +131,12 @@ export default function CollegesPage() {
       {/* Header */}
       <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
-          <div className="flex items-center justify-center h-16">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/" className="text-primary-100 hover:text-white transition-colors lg:block hidden">
+              <ArrowLeft className="w-5 h-5" />
+            </Link>
             <h1 className="text-lg font-bold text-white">Government Colleges</h1>
+            <div className="lg:block hidden w-5"></div>
           </div>
         </div>
       </header>

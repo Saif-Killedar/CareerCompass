@@ -3,19 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Target, GraduationCap, TrendingUp, Clock, Users } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const navigationItems = [
   {
     name: 'Home',
     href: '/',
     icon: Home,
-    activeColor: 'bg-primary-600',
-    hoverColor: 'group-hover:bg-primary-600'
-  },
-  {
-    name: 'Quiz',
-    href: '/quiz',
-    icon: Target,
     activeColor: 'bg-primary-600',
     hoverColor: 'group-hover:bg-primary-600'
   },
@@ -51,16 +45,17 @@ const navigationItems = [
 
 export default function MobileNavigation() {
   const pathname = usePathname();
+  const { isAuthenticated } = useAuth();
 
-  // Show navigation on all pages except auth pages
-  if (pathname === '/login' || pathname === '/register') {
+  // Show navigation only for authenticated users and not on auth pages
+  if (pathname === '/login' || pathname === '/register' || !isAuthenticated) {
     return null;
   }
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-primary-600 border-t-2 border-government-500 shadow-2xl z-50 lg:hidden">
       <div className="safe-area-bottom">
-        <div className="flex items-center justify-around px-2 py-3">
+        <div className="flex items-center justify-around px-2 py-2">
           {navigationItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;

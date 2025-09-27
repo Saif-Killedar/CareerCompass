@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import ProtectedRoute from '../../components/ProtectedRoute';
 import { ArrowLeft, CheckCircle, Circle, ArrowRight, Target, BookOpen, Users, Lightbulb } from 'lucide-react';
 
 interface Question {
@@ -9,7 +10,7 @@ interface Question {
   question: string;
   options: {
     text: string;
-    stream: 'science' | 'commerce' | 'arts' | 'vocational';
+    stream: 'science' | 'commerce' | 'arts';
     weight: number;
   }[];
 }
@@ -21,8 +22,7 @@ const questions: Question[] = [
     options: [
       { text: "Solving math problems and conducting experiments", stream: 'science', weight: 3 },
       { text: "Managing money and understanding business", stream: 'commerce', weight: 3 },
-      { text: "Reading, writing, and creative expression", stream: 'arts', weight: 3 },
-      { text: "Hands-on work and practical skills", stream: 'vocational', weight: 3 }
+      { text: "Reading, writing, and creative expression", stream: 'arts', weight: 3 }
     ]
   },
   {
@@ -31,8 +31,7 @@ const questions: Question[] = [
     options: [
       { text: "Physics, Chemistry, Biology, Mathematics", stream: 'science', weight: 3 },
       { text: "Economics, Accountancy, Business Studies", stream: 'commerce', weight: 3 },
-      { text: "History, Literature, Psychology, Political Science", stream: 'arts', weight: 3 },
-      { text: "Computer Applications, Skill-based courses", stream: 'vocational', weight: 3 }
+      { text: "History, Literature, Psychology, Political Science", stream: 'arts', weight: 3 }
     ]
   },
   {
@@ -41,8 +40,7 @@ const questions: Question[] = [
     options: [
       { text: "Doctor, Engineer, Scientist, Researcher", stream: 'science', weight: 3 },
       { text: "Business Owner, Accountant, Banker, Manager", stream: 'commerce', weight: 3 },
-      { text: "Teacher, Lawyer, Journalist, Civil Servant", stream: 'arts', weight: 3 },
-      { text: "Technician, Designer, Skilled Worker", stream: 'vocational', weight: 3 }
+      { text: "Teacher, Lawyer, Journalist, Civil Servant", stream: 'arts', weight: 3 }
     ]
   },
   {
@@ -51,8 +49,7 @@ const questions: Question[] = [
     options: [
       { text: "Through logical analysis and experimentation", stream: 'science', weight: 2 },
       { text: "By analyzing data and market trends", stream: 'commerce', weight: 2 },
-      { text: "Through discussion and understanding people", stream: 'arts', weight: 2 },
-      { text: "By working with my hands and tools", stream: 'vocational', weight: 2 }
+      { text: "Through discussion and understanding people", stream: 'arts', weight: 2 }
     ]
   },
   {
@@ -61,8 +58,7 @@ const questions: Question[] = [
     options: [
       { text: "Discovering new things and innovation", stream: 'science', weight: 2 },
       { text: "Financial success and business growth", stream: 'commerce', weight: 2 },
-      { text: "Helping society and making a difference", stream: 'arts', weight: 2 },
-      { text: "Creating something with practical value", stream: 'vocational', weight: 2 }
+      { text: "Helping society and making a difference", stream: 'arts', weight: 2 }
     ]
   }
 ];
@@ -89,13 +85,6 @@ const streamResults = {
     subjects: ["History", "Political Science", "Psychology", "Literature"],
     color: "bg-purple-500"
   },
-  vocational: {
-    title: "Vocational & Technical Skills",
-    description: "🎯 Perfect Match! You're a hands-on learner who excels in practical, skill-based work. You prefer learning by doing and creating real-world solutions.",
-    careers: ["Software Developer", "Graphic Designer", "Digital Marketer", "Technician", "Entrepreneur", "Web Developer"],
-    subjects: ["Computer Applications", "Digital Skills", "Trade Courses", "Entrepreneurship", "Technical Training"],
-    color: "bg-orange-500"
-  }
 };
 
 export default function QuizPage() {
@@ -129,8 +118,7 @@ export default function QuizPage() {
     const scores = {
       science: 0,
       commerce: 0,
-      arts: 0,
-      vocational: 0
+      arts: 0
     };
 
     questions.forEach((question, qIndex) => {
@@ -161,12 +149,17 @@ export default function QuizPage() {
 
   if (showResults && results) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 mobile-safe-bottom">
+      <ProtectedRoute>
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 mobile-safe-bottom">
         {/* Header */}
         <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
           <div className="mobile-container">
-            <div className="flex items-center justify-center h-16">
-              <h1 className="text-lg font-bold text-white">Your Career Compass Results</h1>
+            <div className="flex items-center justify-between h-16">
+              <Link href="/" className="text-primary-100 hover:text-white transition-colors lg:block hidden">
+                <ArrowLeft className="w-5 h-5" />
+              </Link>
+              <h1 className="text-lg font-bold text-white">Your Results</h1>
+              <div className="lg:block hidden w-5"></div>
             </div>
           </div>
         </header>
@@ -177,8 +170,98 @@ export default function QuizPage() {
             <div className="w-20 h-20 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">🎯</span>
             </div>
-            <h2 className="text-2xl font-bold text-neutral-800 mb-2">Your Recommended Stream</h2>
+            <h2 className="text-2xl font-bold text-neutral-800 mb-2">Your Career Compass Results</h2>
             <p className="text-neutral-600">Based on your interests and preferences</p>
+          </div>
+
+          {/* Score Breakdown - Pie Chart */}
+          <div className="bg-white rounded-2xl shadow-soft border border-primary-100 p-6 mb-6">
+            <h3 className="text-lg font-bold text-neutral-800 mb-6 text-center">📊 Your Interest Profile</h3>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+              {/* Pie Chart */}
+              <div className="relative">
+                <svg width="200" height="200" viewBox="0 0 200 200" className="transform -rotate-90">
+                  {(() => {
+                    const total = Object.values(results.scores).reduce((sum, score) => sum + Number(score), 0);
+                    let currentAngle = 0;
+                    const colors = ['#3b82f6', '#10b981', '#8b5cf6']; // blue, green, purple
+                    
+                    return Object.entries(results.scores).map(([stream, score], index) => {
+                      const percentage = Number(score) / total;
+                      const angle = percentage * 360;
+                      const startAngle = currentAngle;
+                      const endAngle = currentAngle + angle;
+                      
+                      // Calculate path for pie slice
+                      const startAngleRad = (startAngle * Math.PI) / 180;
+                      const endAngleRad = (endAngle * Math.PI) / 180;
+                      
+                      const largeArcFlag = angle > 180 ? 1 : 0;
+                      const x1 = 100 + 80 * Math.cos(startAngleRad);
+                      const y1 = 100 + 80 * Math.sin(startAngleRad);
+                      const x2 = 100 + 80 * Math.cos(endAngleRad);
+                      const y2 = 100 + 80 * Math.sin(endAngleRad);
+                      
+                      const pathData = [
+                        `M 100 100`,
+                        `L ${x1} ${y1}`,
+                        `A 80 80 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+                        'Z'
+                      ].join(' ');
+                      
+                      currentAngle += angle;
+                      
+                      return (
+                        <path
+                          key={stream}
+                          d={pathData}
+                          fill={colors[index]}
+                          stroke="white"
+                          strokeWidth="2"
+                          className="hover:opacity-80 transition-opacity cursor-pointer"
+                        />
+                      );
+                    });
+                  })()}
+                  
+                  {/* Center circle for donut effect */}
+                  <circle cx="100" cy="100" r="40" fill="white" />
+                  
+                  {/* Center text */}
+                  <text x="100" y="95" textAnchor="middle" className="fill-neutral-700 text-sm font-semibold transform rotate-90" style={{transformOrigin: '100px 100px'}}>
+                    Interest
+                  </text>
+                  <text x="100" y="110" textAnchor="middle" className="fill-neutral-700 text-sm font-semibold transform rotate-90" style={{transformOrigin: '100px 100px'}}>
+                    Profile
+                  </text>
+                </svg>
+              </div>
+              
+              {/* Legend */}
+              <div className="space-y-3">
+                {Object.entries(results.scores).map(([stream, score], index) => {
+                  const total = Object.values(results.scores).reduce((sum, s) => sum + Number(s), 0);
+                  const percentage = Math.round((Number(score) / total) * 100);
+                  const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500'];
+                  
+                  return (
+                    <div key={stream} className="flex items-center space-x-3">
+                      <div className={`w-4 h-4 rounded-full ${colors[index]}`}></div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium text-neutral-700 capitalize">{stream}</span>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-sm text-neutral-600">{Number(score)} pts</span>
+                            <span className="text-xs text-neutral-500">({percentage}%)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Main Result Card */}
@@ -187,25 +270,25 @@ export default function QuizPage() {
               <div className={`w-16 h-16 ${results.details.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
                 <span className="text-2xl">🎯</span>
               </div>
-              <h3 className="text-2xl font-bold text-neutral-800 mb-3">{results.details.title}</h3>
+              <h3 className="text-2xl font-bold text-neutral-800 mb-3">Your Recommended Stream: {results.details.title}</h3>
               <div className={`w-full h-3 ${results.details.color} rounded-full mb-4 opacity-20`}></div>
               <p className="text-neutral-700 text-lg leading-relaxed">{results.details.description}</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <h4 className="font-semibold text-neutral-700 mb-2 flex items-center">
+                <h4 className="font-semibold text-neutral-700 mb-3 flex items-center">
                   <BookOpen className="w-4 h-4 mr-2" />
-                  Recommended Subjects
+                  📚 Recommended Subjects
                 </h4>
-                <ul className="space-y-1">
+                <div className="space-y-2">
                   {results.details.subjects.map((subject: string, index: number) => (
-                    <li key={index} className="text-sm text-neutral-600 flex items-center">
-                      <CheckCircle className="w-3 h-3 mr-2 text-green-500" />
-                      {subject}
-                    </li>
+                    <div key={index} className="bg-green-50 rounded-lg p-3 flex items-center">
+                      <CheckCircle className="w-4 h-4 mr-3 text-green-500 flex-shrink-0" />
+                      <span className="text-sm font-medium text-neutral-700">{subject}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
               
               <div>
@@ -225,27 +308,6 @@ export default function QuizPage() {
             </div>
           </div>
 
-          {/* Score Breakdown */}
-          <div className="bg-white rounded-2xl shadow-soft border border-primary-100 p-6 mb-6">
-            <h3 className="text-lg font-bold text-neutral-800 mb-4">Your Interest Profile</h3>
-            <div className="space-y-3">
-              {Object.entries(results.scores).map(([stream, score]) => (
-                <div key={stream} className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-neutral-700 capitalize">{stream}</span>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-24 h-2 bg-neutral-200 rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full ${streamResults[stream as keyof typeof streamResults].color}`}
-                        style={{ width: `${((score as number) / 15) * 100}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-sm text-neutral-600 w-8">{score as number}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Action Buttons */}
           <div className="space-y-4">
             <Link href="/colleges" className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors flex items-center justify-center">
@@ -261,18 +323,25 @@ export default function QuizPage() {
             </button>
           </div>
         </div>
-      </div>
+        </div>
+      </ProtectedRoute>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 mobile-safe-bottom">
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-government-50 to-official-50 mobile-safe-bottom">
       {/* Header */}
       <header className="bg-primary-600 shadow-lg border-b-2 border-primary-700">
         <div className="mobile-container">
           <div className="flex items-center justify-between h-16">
-            <div className="text-sm text-primary-100">
-              {currentQuestion + 1}/{questions.length}
+            <div className="flex items-center">
+              <Link href="/" className="text-primary-100 hover:text-white transition-colors mr-4 lg:block hidden">
+                <ArrowLeft className="w-5 h-5" />
+              </Link>
+              <div className="text-sm text-primary-100">
+                {currentQuestion + 1}/{questions.length}
+              </div>
             </div>
             <h1 className="text-lg font-bold text-white">Career Quiz</h1>
             <div className="text-sm text-primary-100">
@@ -363,6 +432,7 @@ export default function QuizPage() {
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 }

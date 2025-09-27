@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import ScholarshipAlerts from '../components/ScholarshipAlerts';
+import ProtectedRoute from '../components/ProtectedRoute';
 import { 
   ArrowRight, 
   Users, 
@@ -129,7 +129,8 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <ProtectedRoute>
+      <div className="min-h-screen bg-white">
       {/* Mobile-First Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-primary-600 shadow-lg">
         <div className="mobile-container">
@@ -160,23 +161,16 @@ export default function HomePage() {
               </Link>
             </nav>
 
-            {/* Profile/Auth Options */}
+            {/* Auth Options */}
             <div className="flex items-center space-x-2 sm:space-x-4">
-              {/* Mobile Profile/Login */}
-              <div className="flex items-center space-x-2">
-                <Link href="/profile" className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors">
-                  <Users className="w-5 h-5" />
+              {/* Desktop Auth */}
+              <div className="hidden sm:flex items-center space-x-3">
+                <Link href="/login" className="font-medium text-white hover:bg-white/10 transition-colors px-3 py-2 rounded-lg">
+                  Login
                 </Link>
-                
-                {/* Desktop Auth */}
-                <div className="hidden sm:flex items-center space-x-3">
-                  <Link href="/login" className="font-medium text-white hover:bg-white/10 transition-colors px-3 py-2 rounded-lg">
-                    Login
-                  </Link>
-                  <Link href="/register" className="gov-button text-sm">
-                    Create Account
-                  </Link>
-                </div>
+                <Link href="/register" className="gov-button text-sm">
+                  Create Account
+                </Link>
               </div>
             </div>
           </div>
@@ -425,10 +419,16 @@ export default function HomePage() {
               <Target className="w-5 h-5 mr-2 inline" />
               Start Free Career Quiz
             </Link>
-            <Link href="/register" className="w-full sm:w-auto bg-government-500 hover:bg-government-400 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-200 shadow-medium">
-              <Users className="w-5 h-5 mr-2 inline" />
-              Create Account
-            </Link>
+            <div className="flex flex-col gap-3 w-full sm:w-auto">
+              <Link href="/register" className="w-full sm:w-auto bg-government-500 hover:bg-government-400 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-200 shadow-medium">
+                <Users className="w-5 h-5 mr-2 inline" />
+                Create Account
+              </Link>
+              <Link href="/login" className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 font-medium px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all duration-200">
+                <Users className="w-5 h-5 mr-2 inline" />
+                Login
+              </Link>
+            </div>
           </div>
           
           <p className="text-sm text-primary-200 mt-4">
@@ -562,173 +562,62 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Important Deadlines Section */}
-      <section className="mobile-section bg-gradient-to-br from-danger-50 to-orange-50">
+      {/* Why Join CareerCompass Section */}
+      <section className="mobile-section bg-white">
         <div className="mobile-container">
           <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-flex items-center px-3 py-1 sm:px-4 sm:py-2 bg-danger-100 text-danger-700 rounded-full text-xs sm:text-sm font-medium mb-4">
-              <Clock className="w-4 h-4 mr-2" />
-              Critical Deadlines Alert
-            </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-4">
-              Don't Miss These Important Dates
+              Why Join CareerCompass?
             </h2>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-              Stay updated with admission deadlines, scholarship applications, and exam dates
+              Discover the benefits of joining J&K's premier career guidance platform
             </p>
           </div>
 
-          {/* Horizontal Scrollable Deadlines Carousel */}
-          <div className="relative max-w-6xl mx-auto">
-            {/* Navigation Buttons */}
-            <button 
-              id="deadlines-scroll-left"
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-danger-50 transition-colors duration-200"
-              onClick={() => {
-                const container = document.getElementById('deadlines-container');
-                container.scrollBy({ left: -350, behavior: 'smooth' });
-              }}
-            >
-              <svg className="w-6 h-6 text-danger-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <button 
-              id="deadlines-scroll-right"
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-danger-50 transition-colors duration-200"
-              onClick={() => {
-                const container = document.getElementById('deadlines-container');
-                container.scrollBy({ left: 350, behavior: 'smooth' });
-              }}
-            >
-              <svg className="w-6 h-6 text-danger-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            {/* Scrollable Container */}
-            <div 
-              id="deadlines-container"
-              className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
-              style={{
-                scrollSnapType: 'x mandatory',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none'
-              }}
-            >
-              {/* JEE Main Alert */}
-              <div className="flex-shrink-0 w-80 bg-white border-l-4 border-danger-500 rounded-xl p-4 sm:p-6 shadow-soft hover:shadow-medium transition-shadow duration-300" style={{ scrollSnapAlign: 'start' }}>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center mb-2">
-                      <div className="w-8 h-8 bg-danger-500 rounded-full flex items-center justify-center mr-3">
-                        <Clock className="w-4 h-4 text-white" />
-                      </div>
-                      <h3 className="font-bold text-danger-900 text-sm">JEE Main 2025 Registration</h3>
-                    </div>
-                    <span className="inline-block mb-3 px-2 py-1 bg-danger-100 text-danger-700 rounded-full text-xs font-medium">
-                      23 days left
-                    </span>
-                    <p className="text-neutral-700 mb-3 text-sm leading-relaxed">
-                      Last chance to register for India's biggest engineering entrance exam. Don't miss this opportunity!
-                    </p>
-                    <div className="flex flex-col gap-2">
-                      <Link href="/timeline" className="inline-flex items-center text-danger-600 hover:text-danger-700 font-medium text-sm">
-                        View Details <ArrowRight className="w-4 h-4 ml-1" />
-                      </Link>
-                      <Link href="/register" className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm">
-                        Set Reminder <Star className="w-4 h-4 ml-1" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* NEET Alert */}
-              <div className="flex-shrink-0 w-80 bg-white border-l-4 border-secondary-500 rounded-xl p-4 sm:p-6 shadow-soft hover:shadow-medium transition-shadow duration-300" style={{ scrollSnapAlign: 'start' }}>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center mb-2">
-                      <div className="w-8 h-8 bg-secondary-500 rounded-full flex items-center justify-center mr-3">
-                        <GraduationCap className="w-4 h-4 text-white" />
-                      </div>
-                      <h3 className="font-bold text-secondary-900 text-sm">NEET-UG 2025 Application</h3>
-                    </div>
-                    <span className="inline-block mb-3 px-2 py-1 bg-secondary-100 text-secondary-700 rounded-full text-xs font-medium">
-                      40 days left
-                    </span>
-                    <p className="text-neutral-700 mb-3 text-sm leading-relaxed">
-                      Medical entrance exam registration opens soon. Prepare your documents now.
-                    </p>
-                    <div className="flex flex-col gap-2">
-                      <Link href="/timeline" className="inline-flex items-center text-secondary-600 hover:text-secondary-700 font-medium text-sm">
-                        View Details <ArrowRight className="w-4 h-4 ml-1" />
-                      </Link>
-                      <Link href="/register" className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm">
-                        Set Reminder <Star className="w-4 h-4 ml-1" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* J&K Board Exams */}
-              <div className="flex-shrink-0 w-80 bg-white border-l-4 border-primary-500 rounded-xl p-4 sm:p-6 shadow-soft hover:shadow-medium transition-shadow duration-300" style={{ scrollSnapAlign: 'start' }}>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center mb-2">
-                      <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center mr-3">
-                        <BookOpen className="w-4 h-4 text-white" />
-                      </div>
-                      <h3 className="font-bold text-primary-900 text-sm">J&K Board Class 12 Exams</h3>
-                    </div>
-                    <span className="inline-block mb-3 px-2 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-medium">
-                      83 days left
-                    </span>
-                    <p className="text-neutral-700 mb-3 text-sm leading-relaxed">
-                      Annual board examinations starting March 2025. Start your preparation now.
-                    </p>
-                    <div className="flex flex-col gap-2">
-                      <Link href="/timeline" className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm">
-                        View Details <ArrowRight className="w-4 h-4 ml-1" />
-                      </Link>
-                      <Link href="/quiz" className="inline-flex items-center text-success-600 hover:text-success-700 font-medium text-sm">
-                        Career Guidance <Target className="w-4 h-4 ml-1" />
-                      </Link>
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-soft border border-primary-100 p-6">
+              <div className="flex items-start">
+                <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-neutral-800 mb-2">Personalized Career Guidance</h4>
+                  <p className="text-neutral-600">Get recommendations based on your interests and aptitude</p>
                 </div>
               </div>
             </div>
 
-            {/* Scroll Indicators */}
-            <div className="flex justify-center mt-6 space-x-2">
-              <div className="w-2 h-2 rounded-full bg-danger-300 transition-colors duration-300"></div>
-              <div className="w-2 h-2 rounded-full bg-neutral-300 transition-colors duration-300"></div>
-              <div className="w-2 h-2 rounded-full bg-neutral-300 transition-colors duration-300"></div>
+            <div className="bg-white rounded-2xl shadow-soft border border-primary-100 p-6">
+              <div className="flex items-start">
+                <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-neutral-800 mb-2">Government College Directory</h4>
+                  <p className="text-neutral-600">Access complete information about J&K government colleges</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* CSS for hiding scrollbar */}
-          <style jsx>{`
-            .scrollbar-hide::-webkit-scrollbar {
-              display: none;
-            }
-            .scrollbar-hide {
-              -ms-overflow-style: none;
-              scrollbar-width: none;
-            }
-          `}</style>
+            <div className="bg-white rounded-2xl shadow-soft border border-primary-100 p-6">
+              <div className="flex items-start">
+                <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-neutral-800 mb-2">Scholarship Alerts</h4>
+                  <p className="text-neutral-600">Never miss important scholarship deadlines and opportunities</p>
+                </div>
+              </div>
+            </div>
 
-          <div className="text-center mt-8 sm:mt-12">
-            <Link href="/timeline" className="gov-button">
-              <Clock className="w-5 h-5 mr-2" />
-              View All Deadlines
-            </Link>
+            <div className="bg-white rounded-2xl shadow-soft border border-primary-100 p-6">
+              <div className="flex items-start">
+                <CheckCircle className="w-6 h-6 text-green-500 mr-4 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-neutral-800 mb-2">Career Roadmaps</h4>
+                  <p className="text-neutral-600">Clear pathways from education to career opportunities</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
 
       {/* Success Stories */}
       <section className="mobile-section bg-white">
@@ -841,56 +730,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Scholarship Alerts Section */}
-      <section className="py-12 sm:py-16 bg-gradient-to-br from-neutral-50 to-primary-50">
-        <div className="mobile-container">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-800 mb-4">
-              🎓 Scholarship & Opportunity Alerts
-            </h2>
-            <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-              Never miss a scholarship opportunity! Get instant notifications for scholarships you qualify for
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <ScholarshipAlerts />
-          </div>
-
-          {/* Feature Highlights */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg">
-              <div className="w-12 h-12 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-6 h-6 text-success-600" />
-              </div>
-              <h3 className="font-semibold text-neutral-800 mb-2">Smart Matching</h3>
-              <p className="text-sm text-neutral-600">
-                AI-powered matching based on your academic profile and eligibility criteria
-              </p>
-            </div>
-
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg">
-              <div className="w-12 h-12 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-6 h-6 text-warning-600" />
-              </div>
-              <h3 className="font-semibold text-neutral-800 mb-2">Deadline Alerts</h3>
-              <p className="text-sm text-neutral-600">
-                Timely reminders so you never miss an application deadline
-              </p>
-            </div>
-
-            <div className="text-center p-6 bg-white rounded-xl shadow-lg">
-              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-6 h-6 text-primary-600" />
-              </div>
-              <h3 className="font-semibold text-neutral-800 mb-2">J&K Focused</h3>
-              <p className="text-sm text-neutral-600">
-                Special focus on scholarships available for Jammu & Kashmir students
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-neutral-900 text-white py-8 sm:py-12 mobile-safe-bottom">
@@ -943,6 +782,7 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </ProtectedRoute>
   )
 }

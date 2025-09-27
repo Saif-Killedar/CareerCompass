@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 import MobileNavigation from '../components/MobileNavigation'
+import { AuthProvider } from '../contexts/AuthContext'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -105,10 +106,12 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={`${inter.className} antialiased bg-neutral-50 text-neutral-900`}>
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <MobileNavigation />
+        <AuthProvider>
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <MobileNavigation />
+        </AuthProvider>
       </body>
     </html>
   )
