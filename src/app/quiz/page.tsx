@@ -109,35 +109,29 @@ export default function QuizPage() {
   };
 
   const prevQuestion = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(prev => prev - 1);
-    }
+    setCurrentQuestion(prev => prev - 1);
   };
 
   const calculateResults = () => {
-    const scores = {
-      science: 0,
-      commerce: 0,
-      arts: 0
-    };
-
-    questions.forEach((question, qIndex) => {
-      const answerIndex = answers[qIndex];
-      if (answerIndex !== undefined) {
-        const option = question.options[answerIndex];
-        scores[option.stream] += option.weight;
-      }
+    const scores = { science: 0, commerce: 0, arts: 0 };
+    
+    Object.entries(answers).forEach(([questionIndex, optionIndex]) => {
+      const question = questions[parseInt(questionIndex)];
+      const option = question.options[optionIndex];
+      scores[option.stream] += option.weight;
     });
 
-    const topStream = Object.entries(scores).reduce((a, b) => 
-      scores[a[0] as keyof typeof scores] > scores[b[0] as keyof typeof scores] ? a : b
-    )[0] as keyof typeof streamResults;
+    const total = Object.values(scores).reduce((sum: number, score: number) => sum + score, 0);
+    const percentages = Object.entries(scores).reduce((acc, [stream, score]) => {
+      acc[stream] = total > 0 ? Math.round((Number(score) / total) * 100) : 0;
+      return acc;
+    }, {} as Record<string, number>);
 
-    setResults({
-      recommendedStream: topStream,
-      scores,
-      details: streamResults[topStream]
-    });
+    // Find the stream with highest score
+    const topStream = Object.entries(scores).reduce((a, b) => scores[a[0]] > scores[b[0]] ? a : b)[0] as keyof typeof streamResults;
+    const details = streamResults[topStream];
+
+    setResults({ scores, percentages, total, details });
     setShowResults(true);
   };
 
@@ -183,7 +177,7 @@ export default function QuizPage() {
               <div className="relative">
                 <svg width="200" height="200" viewBox="0 0 200 200" className="transform -rotate-90">
                   {(() => {
-                    const total = Object.values(results.scores).reduce((sum, score) => sum + Number(score), 0);
+                    const total = Object.values(results.scores).reduce((sum: number, score: unknown) => sum + Number(score), 0);
                     let currentAngle = 0;
                     const colors = ['#3b82f6', '#10b981', '#8b5cf6']; // blue, green, purple
                     
@@ -241,7 +235,7 @@ export default function QuizPage() {
               {/* Legend */}
               <div className="space-y-3">
                 {Object.entries(results.scores).map(([stream, score], index) => {
-                  const total = Object.values(results.scores).reduce((sum, s) => sum + Number(s), 0);
+                  const total = Object.values(results.scores).reduce((sum: number, s: unknown) => sum + Number(s), 0);
                   const percentage = Math.round((Number(score) / total) * 100);
                   const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500'];
                   
